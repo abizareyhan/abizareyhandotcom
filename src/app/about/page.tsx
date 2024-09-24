@@ -17,14 +17,14 @@ export default function About() {
                                 width={1080}
                                 height={1080}
                                 sizes="(min-width: 1024px) 32rem, 20rem"
-                                className="object-cover aspect-square rotate-3 rounded-2xl bg-zinc-100 dark:bg-zinc-800"
+                                className="object-cover aspect-square rotate-3 rounded-2xl bg-zinc-800"
                             />
                         </div>
                     </div>
                     <div className="lg:order-first lg:row-span-2">
                         <div className="lg:order-first lg:row-span-2">
-                            <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">Hi I’m Reyhan</h1>
-                            <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
+                            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl text-zinc-100">Hi I’m Reyhan</h1>
+                            <div className="mt-6 space-y-7 text-base text-zinc-400">
                                 <p>I’ve been into tech since 2017, and I currently focus on building awesome mobile apps with Kotlin. My goal is to create easy-to-use experiences that people really enjoy while also driving success for businesses.</p>
                                 <p>I’m proud of turning ideas into real products. I love being involved in every part of making an app, from the first idea to launching it. With my Google Play Academy certification, I know the rules of Google Play, which helps me keep my apps up to date and meet all the requirements.</p>
                                 <p>I believe in learning all the time. I like trying out new tools and ideas to keep my skills sharp. Staying updated on the latest trends in mobile development helps keep my creativity going.</p>
@@ -70,7 +70,7 @@ const SocialLink: React.FC<{ icon: React.ElementType; href: string, className: s
         <li className={clsx(className, 'flex')}>
             <Link
                 href={href}
-                className="flex text-sm font-medium transition group text-zinc-800 hover:text-teal-500 dark:text-zinc-200 dark:hover:text-teal-500"
+                className="flex text-sm font-medium transition group text-zinc-200 hover:text-teal-500"
             >
                 <Icon className="flex-none w-6 h-6 transition fill-zinc-500 group-hover:fill-teal-500" />
                 <span className="ml-4">{children}</span>

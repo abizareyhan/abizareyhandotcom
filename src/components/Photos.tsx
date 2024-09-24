@@ -53,7 +53,7 @@ const Photos = () => {
         <>
             <Container className="mt-16">
                 <div className="max-w-2xl text-lg">
-                    <h3 className="text-xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-3xl">
+                    <h3 className="text-xl font-bold tracking-tight text-zinc-100 sm:text-3xl">
                         Works
                     </h3>
                 </div>
@@ -65,7 +65,7 @@ const Photos = () => {
                             <div key={image.src} className="flex flex-col items-center">
                                 <div
                                     className={clsx(
-                                        'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
+                                        'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-800 sm:w-72 sm:rounded-2xl',
                                         image.rotation
                                     )}
                                 >

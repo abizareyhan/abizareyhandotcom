@@ -29,7 +29,7 @@ export default function Home() {
     <>
       <Container className="mt-9">
         <div className="max-w-2xl text-lg">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
+          <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
             Senior Android Engineer
           </h1>
           <p className="mt-6 text-base text-zinc-400">
@@ -73,7 +73,7 @@ export default function Home() {
 const SocialLink: React.FC<{ icon: React.ElementType; href: string }> = ({ icon: Icon, href }) => {
   return (
     <Link className="group -m-1 p-1" href={href}>
-      <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
+      <Icon className="h-6 w-6 transition fill-zinc-600 fill-zinc-400 group-hover:fill-zinc-300" />
     </Link>
   )
 }
