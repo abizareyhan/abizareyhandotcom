@@ -2,14 +2,23 @@ import React from "react";
 import { File } from "@/lib/types/file";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft } from "lucide-react";
 
 interface FilePreviewProps {
     currentFile: File | null;
+    onBack?: () => void;
+    showBackButton?: boolean;
 }
 
-const FilePreview: React.FC<FilePreviewProps> = ({ currentFile }) => {
+const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBackButton = false }) => {
     return (
-        <div className="w-full space-y-4 overflow-y-auto border-l border-white/10 p-4 md:w-[480px]">
+        <div className="h-full w-full space-y-4 overflow-y-auto border-l border-white/10 p-4 md:w-[480px]">
+            {showBackButton && (
+                <button onClick={onBack} className="mb-2 flex items-center gap-2 rounded-md p-2 text-white/70 transition-colors hover:bg-white/10">
+                    <ChevronLeft className="h-4 w-4" />
+                    <span>Back to files</span>
+                </button>
+            )}
             <AnimatePresence mode="wait">
                 {currentFile ? (
                     <motion.div

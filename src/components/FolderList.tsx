@@ -11,7 +11,7 @@ interface FolderListProps {
 
 const FolderList: React.FC<FolderListProps> = ({ folders, currentFolder, setCurrentFolder, setCurrentFile }) => {
     return (
-        <div className="w-full space-y-2 overflow-y-auto border-r border-white/10 p-4 md:w-80">
+        <div className="h-full w-full space-y-2 overflow-y-auto border-r border-white/10 p-4 md:w-80">
             {folders.map((folder) => (
                 <button
                     key={folder.id}

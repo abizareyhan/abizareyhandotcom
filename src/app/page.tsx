@@ -2,7 +2,7 @@
 
 import Fuse from "fuse.js";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { File } from "@/lib/types/file";
 import { Folder } from "@/lib/types/folder";
 
@@ -210,6 +210,15 @@ export default function Home() {
 
     const [currentFolder, setCurrentFolder] = useState("all-projects");
 
+    // Add mobile view state
+    type MobileViewState = "folders" | "files" | "preview";
+    const [mobileViewState, setMobileViewState] = useState<MobileViewState>("folders");
+
+    // State to track if device is mobile
+    const [isMobile, setIsMobile] = useState(false);
+
+    const [currentFile, setCurrentFile] = useState<File | null>(null);
+
     const fuseResults = searchQuery ? fuse.search(searchQuery) : [];
 
     const filteredFiles = files.filter((file) => {
@@ -223,13 +232,82 @@ export default function Home() {
         return isInCurrentFolder && (isInFuseResults || isTagMatched);
     });
 
-    const [currentFile, setCurrentFile] = useState<File | null>(null);
+    // Watch for search input changes to update mobile view state
+    useEffect(() => {
+        if (isMobile && searchQuery && mobileViewState !== "files") {
+            setMobileViewState("files");
+        }
+    }, [searchQuery, isMobile, mobileViewState]);
+
+    // Check screen size on component mount and resize
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        // Initial check
+        checkScreenSize();
+
+        // Add event listener for window resize
+        window.addEventListener("resize", checkScreenSize);
+
+        // Cleanup event listener
+        return () => window.removeEventListener("resize", checkScreenSize);
+    }, []);
+
+    // Custom folder selection handler for mobile
+    const handleFolderSelect = (folderId: string) => {
+        setCurrentFolder(folderId);
+        setCurrentFile(null);
+        // On mobile, transition to files view when folder is selected
+        if (isMobile) {
+            // Delay to allow animation to complete
+            setTimeout(() => {
+                setMobileViewState("files");
+            }, 300);
+        }
+    };
+
+    // Custom file selection handler for mobile
+    const handleFileSelect = (file: File) => {
+        setCurrentFile(file);
+        // On mobile, transition to preview when file is selected
+        if (isMobile) {
+            // Delay to allow animation to complete
+            setTimeout(() => {
+                setMobileViewState("preview");
+            }, 300);
+        }
+    };
+
+    // Handle back button press
+    const handleBack = () => {
+        if (mobileViewState === "preview") {
+            setMobileViewState("files");
+        } else if (mobileViewState === "files") {
+            setMobileViewState("folders");
+            setCurrentFolder("all-projects");
+        }
+    };
 
     return (
-        <>
-            <FolderList folders={folders} currentFolder={currentFolder} setCurrentFolder={setCurrentFolder} setCurrentFile={setCurrentFile} />
-            <FileList files={files} filteredFiles={filteredFiles} setCurrentFile={setCurrentFile} currentFile={currentFile} />
-            <FilePreview currentFile={currentFile} />
-        </>
+        <div className="flex h-full w-full flex-row md:flex md:flex-row">
+            <div className={`md:block md:w-80 ${mobileViewState === "folders" ? "flex w-full" : "hidden"}`}>
+                <FolderList folders={folders} currentFolder={currentFolder} setCurrentFolder={handleFolderSelect} setCurrentFile={setCurrentFile} />
+            </div>
+            <div className={`md:flex md:flex-1 ${mobileViewState === "files" ? "flex w-full" : "hidden"}`}>
+                <FileList
+                    files={files}
+                    filteredFiles={filteredFiles}
+                    setCurrentFile={handleFileSelect}
+                    currentFile={currentFile}
+                    onBack={handleBack}
+                    showBackButton={mobileViewState === "files"}
+                />
+            </div>
+            <div className={`md:block md:w-[480px] ${mobileViewState === "preview" ? "flex w-full" : "hidden"}`}>
+                <FilePreview currentFile={currentFile} onBack={handleBack} showBackButton={mobileViewState === "preview"} />
+            </div>
+        </div>
     );
 }

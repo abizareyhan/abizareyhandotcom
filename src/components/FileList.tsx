@@ -2,7 +2,7 @@
 import React from "react";
 import { File } from "@/lib/types/file";
 import Image from "next/image";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface FileListProps {
@@ -10,11 +10,22 @@ interface FileListProps {
     filteredFiles: File[];
     setCurrentFile: (file: File) => void;
     currentFile: File | null;
+    onBack?: () => void;
+    showBackButton?: boolean;
 }
 
-const FileList: React.FC<FileListProps> = ({ files, filteredFiles, setCurrentFile, currentFile }) => {
+const FileList: React.FC<FileListProps> = ({ files, filteredFiles, setCurrentFile, currentFile, onBack, showBackButton = false }) => {
     return (
-        <div className="flex flex-1 flex-row flex-col overflow-hidden">
+        <div className="flex flex-1 flex-col overflow-hidden w-full">
+            {showBackButton && (
+                <button 
+                    onClick={onBack} 
+                    className="flex items-center gap-2 text-white/70 p-2 hover:bg-white/10 rounded-md mb-2 transition-colors"
+                >
+                    <ChevronLeft className="h-4 w-4" />
+                    <span>Back to folders</span>
+                </button>
+            )}
             <div className="flex-1 overflow-y-auto">
                 <AnimatePresence mode="popLayout">
                     {filteredFiles.length > 0 ? (
