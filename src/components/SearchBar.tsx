@@ -11,13 +11,13 @@ const SearchBar = () => {
     };
 
     return (
-        <div className="relative block">
+        <div className="relative block w-full">
             <input
                 type="text"
                 value={searchQuery}
                 onChange={handleSearch}
                 placeholder="Search..."
-                className="rounded-md bg-white/10 px-3 py-2 pl-10 text-white placeholder-white/50 focus:outline-none focus:ring-1 focus:ring-white"
+                className="w-full rounded-md bg-white/10 px-3 py-2 pl-10 text-white placeholder-white/50 focus:outline-none focus:ring-1 focus:ring-white"
             />
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <SearchIcon className="h-5 w-5 text-white/50" />

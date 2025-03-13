@@ -59,31 +59,51 @@ export default function RootLayout({
                 <SearchProvider>
                     <div className="h-screen w-full select-none bg-[url('https://images.unsplash.com/photo-1689005046800-38a1f4f47a51?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] p-6">
                         <div className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-black/30 shadow-2xl backdrop-blur-xl">
-                            <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
-                                <Link href={"/"} className="flex items-center gap-2">
-                                    <Image
-                                        src="https://assets.abizareyhan.com/profile.png"
-                                        alt="Profile Picture"
-                                        width={32}
-                                        height={32}
-                                        className="rounded-full"
-                                    />
-                                    <h1 className="text-lg text-white/90 md:text-xl">AbizaReyhan</h1>
-                                </Link>
-                                <div className="flex items-center gap-4">
-                                    <button
-                                        onClick={() => handleOpenDialog("about")}
-                                        className="inline-block text-white/70 transition-colors duration-300 hover:text-white"
-                                    >
-                                        About
-                                    </button>
-                                    <button
-                                        onClick={() => handleOpenDialog("blog-confirmation")}
-                                        className="inline-block text-white/70 transition-colors duration-300 hover:text-white"
-                                    >
-                                        Blog
-                                    </button>
-                                    <SearchBar />
+                            <div className="flex flex-col border-b border-white/10 px-4 md:h-16 md:flex-row md:items-center md:justify-between">
+                                <div className="flex items-center justify-between py-4 md:py-0">
+                                    <Link href={"/"} className="flex items-center gap-2">
+                                        <Image
+                                            src="https://assets.abizareyhan.com/profile.png"
+                                            alt="Profile Picture"
+                                            width={32}
+                                            height={32}
+                                            className="rounded-full"
+                                        />
+                                        <h1 className="text-lg text-white/90 md:text-xl">AbizaReyhan</h1>
+                                    </Link>
+                                    <div className="flex items-center gap-4 md:hidden">
+                                        <button
+                                            onClick={() => handleOpenDialog("about")}
+                                            className="inline-block text-white/70 transition-colors duration-300 hover:text-white"
+                                        >
+                                            About
+                                        </button>
+                                        <button
+                                            onClick={() => handleOpenDialog("blog-confirmation")}
+                                            className="inline-block text-white/70 transition-colors duration-300 hover:text-white"
+                                        >
+                                            Blog
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="pb-4 md:flex md:items-center md:gap-4 md:pb-0">
+                                    <div className="hidden items-center gap-4 md:flex">
+                                        <button
+                                            onClick={() => handleOpenDialog("about")}
+                                            className="inline-block text-white/70 transition-colors duration-300 hover:text-white"
+                                        >
+                                            About
+                                        </button>
+                                        <button
+                                            onClick={() => handleOpenDialog("blog-confirmation")}
+                                            className="inline-block text-white/70 transition-colors duration-300 hover:text-white"
+                                        >
+                                            Blog
+                                        </button>
+                                    </div>
+                                    <div className="w-full md:w-auto">
+                                        <SearchBar />
+                                    </div>
                                 </div>
                             </div>
                             <div className="flex flex-1 overflow-hidden">{children}</div>
