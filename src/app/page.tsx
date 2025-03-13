@@ -1,79 +1,235 @@
-'use client'
+"use client";
 
-import { Article } from "@/components/Article"
-import { Container } from "@/components/Container"
-import Photos from "@/components/Photos"
-import Resume from "@/components/Resume"
-import { GitHubIcon, LinkedInIcon } from "@/components/SocialIcon"
-import Link from "next/link"
+import Fuse from "fuse.js";
+
+import { useState } from "react";
+import { File } from "@/lib/types/file";
+import { Folder } from "@/lib/types/folder";
+
+import FolderList from "@/components/FolderList";
+import FileList from "@/components/FileList";
+import FilePreview from "@/components/FilePreview";
+
+import { useSearch } from "@/lib/SearchContext";
+
+const folders: Folder[] = [
+    { id: "all-projects", name: "All Projects", icon: "/ic_macos_default_folder.png" },
+    { id: "gravel", name: "Gravel", icon: "/ic_macos_default_folder.png" },
+    { id: "zenius", name: "Zenius", icon: "/ic_macos_default_folder.png" },
+    { id: "kisel", name: "Kisel Indonesia", icon: "/ic_macos_default_folder.png" },
+    { id: "freelance", name: "Freelance", icon: "/ic_macos_default_folder.png" },
+    { id: "personal", name: "Personal", icon: "/ic_macos_default_folder.png" },
+    { id: "blog-posts", name: "Blog Posts", icon: "/ic_file_notes.png" },
+    { id: "others", name: "Others", icon: "/ic_file_launchpad.png" },
+];
+
+const files: File[] = [
+    {
+        id: "gravel-android",
+        name: "Gravel",
+        iconPath: "/ic_file_kotlin.png",
+        folder: ["all-projects", "gravel"],
+        metadata: {
+            description: "An app that helps people in Indonesia find and hire construction workers easily.",
+            startDate: new Date("2023-02-01"),
+            endDate: new Date("2024-10-31"),
+            thumbnail: "/img_preview_placeholder.png",
+            tags: ["Android", "Kotlin"],
+        },
+    },
+    {
+        id: "gravel-dulur-android",
+        name: "Gravel Dulur",
+        iconPath: "/ic_file_kotlin.png",
+        folder: ["all-projects", "gravel"],
+        metadata: {
+            description: "An app for construction workers to find jobs, track their attendance, report progress, and receive payments.",
+            startDate: new Date("2023-02-01"),
+            endDate: new Date("2024-10-31"),
+            thumbnail: "/img_preview_placeholder.png",
+            tags: ["Android", "Kotlin"],
+        },
+    },
+    {
+        id: "zenius-android-v2",
+        name: "Zenius Mobile v2",
+        iconPath: "/ic_file_kotlin.png",
+        folder: ["all-projects", "zenius"],
+        metadata: {
+            description: "An educational app for students in Indonesia that provides video lessons, exercises, live classes, and tryouts.",
+            startDate: new Date("2020-02-01"),
+            endDate: new Date("2023-01-31"),
+            thumbnail: "/img_preview_zenius_v2.png",
+            tags: ["Android", "Kotlin"],
+        },
+    },
+    {
+        id: "zenius-mobile-v1",
+        name: "Zenius Mobile v1",
+        iconPath: "/ic_file_flutter.png",
+        folder: ["all-projects", "zenius"],
+        metadata: {
+            description: "An early version of the Zenius Mobile app, built with Flutter, offering video lessons and practice exercises.",
+            startDate: new Date("2019-05-01"),
+            endDate: new Date("2020-05-31"),
+            thumbnail: "/img_preview_placeholder.png",
+            tags: ["Android", "iOS", "Flutter"],
+        },
+    },
+    {
+        id: "kisel-topup-outlet",
+        name: "Topup Outlet",
+        iconPath: "/ic_file_android.png",
+        folder: ["all-projects", "kisel"],
+        metadata: {
+            description: "An app for Warung owners to handle PPOB transactions quickly and efficiently.",
+            startDate: new Date("2018-07-01"),
+            endDate: new Date("2019-04-30"),
+            thumbnail: "/img_preview_placeholder.png",
+            tags: ["Android", "Java", "Kotlin"],
+        },
+    },
+    {
+        id: "kisel-topup-canvasser",
+        name: "Topup Canvasser",
+        iconPath: "/ic_file_android.png",
+        folder: ["all-projects", "kisel"],
+        metadata: {
+            description: "An app for Kisel Indonesia staff to visit and register new Warung owners as partners.",
+            startDate: new Date("2018-07-01"),
+            endDate: new Date("2019-04-30"),
+            thumbnail: "/img_preview_placeholder.png",
+            tags: ["Android", "Java", "Kotlin"],
+        },
+    },
+    {
+        id: "lexus-reach-indonesia",
+        name: "Lexus Reach Indonesia",
+        iconPath: "/ic_file_flutter.png",
+        folder: ["all-projects", "freelance"],
+        metadata: {
+            description: "An app that helps Lexus users book services, find exclusive parking spots, and contact a concierge for assistance anytime.",
+            startDate: new Date("2019-07-01"),
+            endDate: new Date("2019-09-30"),
+            thumbnail: "/img_preview_placeholder.png",
+            tags: ["Android", "iOS", "Flutter"],
+        },
+    },
+    {
+        id: "nutri-cal",
+        name: "Nutri Cal",
+        iconPath: "/ic_file_kotlin.png",
+        folder: ["all-projects", "freelance"],
+        metadata: {
+            description: "An app made for nutrition doctors to calculate patient diets and manage their prescriptions easily.",
+            startDate: new Date("2023-08-01"),
+            endDate: new Date("2023-10-31"),
+            thumbnail: "/img_preview_placeholder.png",
+            tags: ["Android", "iOS", "Kotlin Multiplatform", "SwiftUI"],
+        },
+    },
+    {
+        id: "yoctolife",
+        name: "YoctoLife",
+        iconPath: "/ic_file_kotlin.png",
+        folder: ["all-projects", "personal"],
+        metadata: {
+            description: "A concept of text based life simulation game with real world maps",
+            tags: ["Android", "Kotlin", "Game"],
+        },
+    },
+    {
+        id: "yakado",
+        name: "YaKado",
+        iconPath: "/ic_file_nextjs.png",
+        folder: ["all-projects", "personal"],
+        metadata: {
+            description: "An app that helps Indonesian people to find the perfect gift for any occasion with a simple and easy way.",
+            tags: ["Web", "Next.js", "React", "Tailwind CSS"],
+        },
+    },
+    {
+        id: "playpublish",
+        name: "PlayPublish",
+        iconPath: "/ic_file_terminal.png",
+        folder: ["all-projects", "personal"],
+        metadata: {
+            description: "A simple CLI tool to automate the process of uploading Android apps to Google Play Store.",
+            tags: ["CLI", "Node.js", "Google Play Store"],
+        },
+    },
+    {
+        id: "blog-google-play-in-app-updates",
+        name: "A step-by-step guide to setting up Google Play In-App Updates",
+        iconPath: "/ic_file_notes.png",
+        folder: ["blog-posts"],
+        metadata: {
+            description: "Learn how to implement Google Play In-App Updates in your Android app to provide a seamless user experience.",
+            tags: ["Android", "Google Play Store", "In-App Updates"],
+        },
+    },
+    {
+        id: "blog-android-dynamic-app-icons",
+        name: "Dynamic App Icons on Android using activity-alias",
+        iconPath: "/ic_file_notes.png",
+        folder: ["blog-posts"],
+        metadata: {
+            description: "Discover how to create dynamic app icons on Android using activity-alias to provide a personalized experience for users.",
+            tags: ["Android", "App Icons", "Activity-Alias"],
+        },
+    },
+    {
+        id: "blog-robots-txt",
+        name: "Hide & Seek with Search Engine using Robots.txt",
+        iconPath: "/ic_file_notes.png",
+        folder: ["blog-posts"],
+        metadata: {
+            description: "Learn how to use robots.txt to control search engine crawlers and prevent specific pages from appearing in search results.",
+            tags: ["SEO", "Robots.txt", "Search Engine"],
+        },
+    },
+];
+
+const fuseOptions = {
+    includeScore: true,
+    threshold: 0.3,
+    distance: 100,
+    minMatchCharLength: 2,
+    ignoreLocation: true,
+    useExtendedSearch: true,
+    keys: [
+        { name: "name", weight: 0.5 },
+        { name: "metadata.description", weight: 0.5 },
+    ],
+};
+
+const fuse = new Fuse(files, fuseOptions);
 
 export default function Home() {
-  const articles = [
-    {
-      url: 'https://blog.abizareyhan.com/dynamic-app-icon-on-android/',
-      title: 'Dynamic App Icons on Android using activity-alias',
-      description: 'Ever wonder how apps like Discord or Twitter let users change their app icon? It’s not magic—it’s an Android trick using activity-alias in the manifest file! By toggling between the main activity and an alias with different icons, you can dynamically switch the app icon during runtime.',
-    },
-    {
-      url: 'https://blog.abizareyhan.com/google-play-in-app-updates-step-by-step/',
-      title: 'A step-by-step guide to setting up Google Play In-App Updates',
-      description: 'As an Android developer, you can remind users to update your app or force them to do so. Google\'s In-App Updates feature lets you update apps within the app itself. You can choose between Flexible updates, allowing users to continue using the app, or Immediate updates, which require an update first.',
-    },
-    {
-      url: 'https://blog.abizareyhan.com/understanding-the-important-of-accessibility/',
-      title: 'Understanding The Important Of Accessibility',
-      description: '"Accessibility" (or "a11y") means making tech easy for everyone, no matter their abilities. Features like voice commands and screen readers help. Whether it\'s websites or apps, ensuring they\'re accessible is key. Even gaming is getting more inclusive with Sony\'s Project Leonardo.',
-    },
-  ]
-  return (
-    <>
-      <Container className="mt-9">
-        <div className="max-w-2xl text-lg">
-          <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
-            Senior Android Engineer
-          </h1>
-          <p className="mt-6 text-base text-zinc-400">
-            Hey, I’m Reyhan, a Senior Android Engineer specializing in Kotlin.
-            I build mobile apps that help companies achieve their goals and long-term vision.
-            As a Google Play Academy certified professional, I have solid knowledge of the Play Store and its policies.
-            I’m passionate about product that I built and leveraging data-driven insights to ensure that the apps I develop meet user needs while driving business success.
-          </p>
-          <div className="mt-6 flex gap-6">
-            <SocialLink
-              href="https://github.com/abizareyhan"
-              icon={GitHubIcon}
-            />
-            <SocialLink
-              href="https://linkedin.com/in/abizareyhan"
-              icon={LinkedInIcon}
-            />
-          </div>
-        </div>
-      </Container>
-      <Photos />
-      <Container className="mt-24">
-        <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-          <div className="flex flex-col gap-16">
-            <h3 className="text-xl font-bold tracking-tight text-zinc-100 sm:text-3xl">
-              Articles
-            </h3>
-            {articles.map((article) => (
-              <Article key={article.url} article={article} />
-            ))}
-          </div>
-          <div className="space-y-10 lg:pl-16 xl:pl-24">
-            <Resume />
-          </div>
-        </div>
-      </Container>
-    </>
-  )
-}
+    const { searchQuery } = useSearch();
 
-const SocialLink: React.FC<{ icon: React.ElementType; href: string }> = ({ icon: Icon, href }) => {
-  return (
-    <Link className="group -m-1 p-1" href={href}>
-      <Icon className="h-6 w-6 transition fill-zinc-600 fill-zinc-400 group-hover:fill-zinc-300" />
-    </Link>
-  )
+    const [currentFolder, setCurrentFolder] = useState("all-projects");
+
+    const fuseResults = searchQuery ? fuse.search(searchQuery) : [];
+
+    const filteredFiles = files.filter((file) => {
+        const isInCurrentFolder = file.folder.includes(currentFolder);
+
+        if (!searchQuery) return isInCurrentFolder;
+
+        const isInFuseResults = fuseResults.some((result) => result.item === file);
+        const isTagMatched = file.metadata?.tags?.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase())) ?? false;
+
+        return isInCurrentFolder && (isInFuseResults || isTagMatched);
+    });
+
+    const [currentFile, setCurrentFile] = useState<File | null>(null);
+
+    return (
+        <>
+            <FolderList folders={folders} currentFolder={currentFolder} setCurrentFolder={setCurrentFolder} setCurrentFile={setCurrentFile} />
+            <FileList files={files} filteredFiles={filteredFiles} setCurrentFile={setCurrentFile} currentFile={currentFile} />
+            <FilePreview currentFile={currentFile} />
+        </>
+    );
 }

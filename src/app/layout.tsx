@@ -1,72 +1,289 @@
-import type { Metadata } from "next"
-import { Inter, Plus_Jakarta_Sans } from "next/font/google"
-import "./globals.css"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
-import { GoogleAnalytics } from '@next/third-parties/google'
+"use client";
 
-const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] })
+import { Plus_Jakarta_Sans } from "next/font/google";
+import "./globals.css";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { SiGithub, SiLinkedin } from "@icons-pack/react-simple-icons";
+import Image from "next/image";
+import React, { useState } from "react";
+import { SearchProvider } from "@/lib/SearchContext";
+import SearchBar from "@/components/SearchBar";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Reyhan Abizar - Senior Android Engineer",
-  description: "Reyhan Abizar's portfolio showcasing expertise in Android development, Kotlin, and mobile app development.",
-  keywords: "Reyhan Abizar, Android Engineer, Kotlin, Mobile Development, Portfolio",
-  openGraph: {
-    title: "Reyhan Abizar - Senior Android Engineer",
-    description: "Reyhan Abizar's portfolio showcasing expertise in Android development, Kotlin, and mobile app development.",
-    url: "https://abizareyhan.com",
-    type: "website",
-    images: [
-      {
-        url: "https://assets.abizareyhan.com/profile.png",
-        width: 1080,
-        height: 1080,
-        alt: "Reyhan Abizar",
-      },
-    ],
-  },
-  twitter: {
-    images: [
-      {
-        url: "https://assets.abizareyhan.com/profile.png",
-        width: 1080,
-        height: 1080,
-        alt: "Reyhan Abizar",
-      },
-    ],
-    card: "summary_large_image",
-    site: "@abizareyhan",
-    title: "Reyhan Abizar - Senior Android Engineer",
-    description: "Reyhan Abizar's portfolio showcasing expertise in Android development, Kotlin, and mobile app development.",
-  },
-}
+const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <link rel="icon" href="/favicon.ico" sizes="any" />
+    const [selectedDialog, setSelectedDialog] = useState<null | "about" | "blog-confirmation">(null);
 
-      <body className={plusJakartaSans.className}>
-        <>
-          <div className="fixed inset-0 flex justify-center sm:px-8">
-            <div className="flex w-full max-w-7xl lg:px-8">
-              <div className="w-full ring-1 ring-zinc-100 bg-zinc-900 ring-zinc-300/20" />
-            </div>
-          </div>
-          <div className="relative">
-            <Header />
-            <main>
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </>
-      </body>
-      <GoogleAnalytics gaId="G-G9RBZJFR8E" />
-    </html>
-  )
+    const handleOpenDialog = (dialog: "about" | "blog-confirmation") => {
+        setSelectedDialog(dialog);
+    };
+
+    const handleCloseDialog = () => {
+        setSelectedDialog(null);
+    };
+
+    const renderDialogTitle = () => {
+        switch (selectedDialog) {
+            case "about":
+                return "About";
+            case "blog-confirmation":
+                return "Confirm";
+            default:
+                return null;
+        }
+    };
+
+    const renderDialogContent = () => {
+        switch (selectedDialog) {
+            case "about":
+                return <AboutDialog />;
+            case "blog-confirmation":
+                return ConfirmationOpenLinkDialog("https://blog.abizareyhan.com", setSelectedDialog);
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <html lang="en">
+            <link rel="icon" href="/favicon.ico" sizes="any" />
+            <title>Reyhan Abizar - Software Engineer</title>
+
+            <body className={plusJakartaSans.className}>
+                <SearchProvider>
+                    <div className="h-screen w-full select-none bg-[url('https://images.unsplash.com/photo-1689005046800-38a1f4f47a51?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] p-6">
+                        <div className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-black/30 shadow-2xl backdrop-blur-xl">
+                            <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
+                                <Link href={"/"} className="flex items-center gap-2">
+                                    <Image
+                                        src="https://assets.abizareyhan.com/profile.png"
+                                        alt="Profile Picture"
+                                        width={32}
+                                        height={32}
+                                        className="rounded-full"
+                                    />
+                                    <h1 className="text-lg text-white/90 md:text-xl">AbizaReyhan</h1>
+                                </Link>
+                                <div className="flex items-center gap-4">
+                                    <button
+                                        onClick={() => handleOpenDialog("about")}
+                                        className="inline-block text-white/70 transition-colors duration-300 hover:text-white"
+                                    >
+                                        About
+                                    </button>
+                                    <button
+                                        onClick={() => handleOpenDialog("blog-confirmation")}
+                                        className="inline-block text-white/70 transition-colors duration-300 hover:text-white"
+                                    >
+                                        Blog
+                                    </button>
+                                    <SearchBar />
+                                </div>
+                            </div>
+                            <div className="flex flex-1 overflow-hidden">{children}</div>
+                            <footer className="flex h-12 items-center justify-between border-t border-white/10 px-4 text-sm text-white/70">
+                                <div>
+                                    Inspired by{" "}
+                                    <a
+                                        href="https://www.linkedin.com/posts/fonsmans_finder-portfolio-made-in-framer-activity-7266038502004338690-lpg5/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="transition-colors duration-300 hover:text-white"
+                                    >
+                                        Fons Mans
+                                    </a>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                    <a
+                                        href="https://github.com/abizareyhan"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="transition-colors duration-300 hover:text-white"
+                                    >
+                                        <SiGithub className="h-5 w-5" />
+                                    </a>
+                                    <a
+                                        href="https://linkedin.com/in/abizareyhan"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="transition-colors duration-300 hover:text-white"
+                                    >
+                                        <SiLinkedin className="h-5 w-5" />
+                                    </a>
+                                </div>
+                            </footer>
+                        </div>
+                        <AnimatePresence>
+                            {selectedDialog && (
+                                <motion.div
+                                    className="fixed inset-0 z-10 flex items-center justify-center bg-black/30"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    onClick={handleCloseDialog}
+                                >
+                                    <motion.div
+                                        className="relative w-full max-w-lg transform overflow-hidden rounded-xl border border-white/10 bg-[#2B3134]/30 text-left shadow-2xl backdrop-blur"
+                                        initial={{ scale: 0.95, opacity: 0 }}
+                                        animate={{ scale: 1, opacity: 1 }}
+                                        exit={{ scale: 0.95, opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <div className="relative flex gap-2 p-4">
+                                            <div className="z-20 flex gap-2">
+                                                <button
+                                                    className="h-3 w-3 cursor-pointer rounded-full bg-red-500 transition-colors duration-300 hover:bg-red-400 focus:outline-none"
+                                                    onClick={handleCloseDialog}
+                                                ></button>
+                                                <div className="h-3 w-3 rounded-full bg-gray-700"></div>
+                                                <div className="h-3 w-3 rounded-full bg-gray-700"></div>
+                                            </div>
+                                            <div className="absolute inset-0 flex items-center justify-center">
+                                                <h2 className="text-sm font-medium text-white/90">{renderDialogTitle()}</h2>
+                                            </div>
+                                        </div>
+
+                                        {/* Dialog Content */}
+                                        <div className="w-full rounded-lg p-0">
+                                            <div className="w-full sm:flex sm:items-start">
+                                                <div className="w-full text-center sm:text-left">{renderDialogContent()}</div>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </SearchProvider>
+            </body>
+            <GoogleAnalytics gaId="G-G9RBZJFR8E" />
+        </html>
+    );
 }
+
+const AboutDialog = () => {
+    const lastUpdated = new Date("2024-12-18T15:00:00+07:00");
+
+    return (
+        <div className="flex w-full flex-col items-center space-y-4 p-4">
+            <Image src="https://assets.abizareyhan.com/profile.png" alt="Profile Picture" width={64} height={64} className="rounded-full" />
+            <div className="flex w-full flex-col items-center">
+                <p className="text-center text-lg font-bold text-white">Muhammad Reyhan Abizar</p>
+                <p className="text-center text-xs text-white/70">Software Engineer since 2017</p>
+            </div>
+            <div className="flex w-full flex-col rounded border border-white/10">
+                <div className="divide-y divide-zinc-700 text-xs">
+                    <div className="flex items-start justify-between space-x-10 p-2">
+                        <span className="flex-none text-zinc-400">Specialization</span>
+                        <span className="max-w-full flex-wrap break-words text-end text-white">Mobile Development</span>
+                    </div>
+                    <div className="flex items-start justify-between space-x-12 p-2">
+                        <span className="flex-none text-zinc-400">Tech Stack</span>
+                        <span className="max-w-full flex-wrap break-words text-end text-white">
+                            Kotlin, Kotlin Multiplatform, Java, Flutter, React, Tailwind, Next.js, PHP, Laravel, SQL, Firebase, and more.
+                        </span>
+                    </div>
+                    <div className="flex items-start justify-between space-x-10 p-2">
+                        <span className="flex-none text-zinc-400">Current Employment</span>
+                        <span className="max-w-full flex-wrap break-words text-end text-white">Full Time at PGI Data as Android Developer</span>
+                    </div>
+                    <div className="flex items-start justify-between space-x-10 p-2">
+                        <span className="flex-none text-zinc-400">Open for Opportunity</span>
+                        <span className="max-w-full flex-wrap break-words text-end text-white">Yes, but not actively looking</span>
+                    </div>
+                    {/* <div className="flex items-start justify-between space-x-10 p-2">
+                        <span className="flex-none text-zinc-400">Latest Certification</span>
+                        <div className="max-w-full flex-wrap space-y-2 break-words text-end text-white">
+                            <span className="max-w-full flex-wrap break-words text-end text-white">
+                                Google Play Academy - Store Listing Certificate
+                            </span>
+                            <div className="flex max-w-full flex-col flex-wrap items-end space-y-2 break-words text-end">
+                                <Link
+                                    className="shadow-apple relative w-auto rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
+                                    href="https://www.credential.net/706e4c15-202e-4d6d-a386-fb3631821700"
+                                    target="_blank"
+                                >
+                                    <span className="absolute inset-0 rounded-[5px] bg-gradient-to-b from-white to-transparent opacity-[.17]"></span>
+                                    View Certificate
+                                </Link>
+                            </div>
+                        </div>
+                    </div> */}
+                    <div className="flex items-center justify-between space-x-10 p-2">
+                        <span className="flex-none text-zinc-400">Resume</span>
+                        <div className="flex max-w-full flex-col flex-wrap items-end space-y-2 break-words text-end">
+                            <button
+                                className="shadow-apple relative w-auto rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
+                                onClick={() => {}}
+                            >
+                                <span className="absolute inset-0 rounded-[5px] bg-gradient-to-b from-white to-transparent opacity-[.17]"></span>
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="flex w-full justify-end space-x-4 text-white/70">
+                <span className="text-xs">
+                    Last updated {lastUpdated.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                </span>
+                <div className="flex-1"></div>
+                <a
+                    href="https://github.com/abizareyhan"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors duration-300 hover:text-white"
+                >
+                    <SiGithub className="h-5 w-5" />
+                </a>
+                <a
+                    href="https://linkedin.com/in/abizareyhan"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors duration-300 hover:text-white"
+                >
+                    <SiLinkedin className="h-5 w-5" />
+                </a>
+            </div>
+        </div>
+    );
+};
+
+const ConfirmationOpenLinkDialog = (url: string, setSelectedDialog: (dialog: null) => void) => {
+    return (
+        <div className="flex w-full flex-col p-4">
+            <p className="text-sm text-white/70">This link is taking you to the following website</p>
+            <div className="mt-2 flex w-full flex-col rounded border border-white/10">
+                <div className="divide-y divide-zinc-700 p-2 text-xs">
+                    <span className="max-w-full flex-wrap break-words text-start text-white">{url}</span>
+                </div>
+            </div>
+            <div className="mt-6 flex w-full justify-end space-x-2">
+                <button
+                    className="shadow-apple relative rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
+                    onClick={() => {
+                        setSelectedDialog(null);
+                        window.open(url, "_blank");
+                    }}
+                >
+                    <span className="rounded-[5px]bg-gradient-to-b absolute inset-0 from-white to-transparent opacity-[.17]"></span>
+                    Open Link
+                </button>
+                <button
+                    className="shadow-apple relative rounded-[5px] bg-white px-[7px] py-[3px] text-xs text-black"
+                    onClick={() => setSelectedDialog(null)}
+                >
+                    Cancel
+                </button>
+            </div>
+        </div>
+    );
+};
