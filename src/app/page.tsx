@@ -257,27 +257,25 @@ export default function Home() {
 
     // Custom folder selection handler for mobile
     const handleFolderSelect = (folderId: string) => {
-        setCurrentFolder(folderId);
-        setCurrentFile(null);
-        // On mobile, transition to files view when folder is selected
         if (isMobile) {
-            // Delay to allow animation to complete
-            setTimeout(() => {
-                setMobileViewState("files");
-            }, 300);
+            setMobileViewState("files");
         }
+
+        setTimeout(() => {
+            setCurrentFolder(folderId);
+            setCurrentFile(null);
+        }, 250);
     };
 
     // Custom file selection handler for mobile
     const handleFileSelect = (file: File) => {
-        setCurrentFile(file);
-        // On mobile, transition to preview when file is selected
         if (isMobile) {
-            // Delay to allow animation to complete
-            setTimeout(() => {
-                setMobileViewState("preview");
-            }, 300);
+            setMobileViewState("preview");
         }
+
+        setTimeout(() => {
+            setCurrentFile(file);
+        }, 100);
     };
 
     // Handle back button press
@@ -286,7 +284,6 @@ export default function Home() {
             setMobileViewState("files");
         } else if (mobileViewState === "files") {
             setMobileViewState("folders");
-            setCurrentFolder("all-projects");
         }
     };
 

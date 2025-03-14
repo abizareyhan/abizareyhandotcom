@@ -3,7 +3,7 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { SiGithub, SiLinkedin } from "@icons-pack/react-simple-icons";
+import { SiGithub, SiGmail, SiLinkedin } from "@icons-pack/react-simple-icons";
 import Image from "next/image";
 import React, { useState } from "react";
 import { SearchProvider } from "@/lib/SearchContext";
@@ -120,22 +120,30 @@ export default function RootLayout({
                                     </a>
                                 </div>
                                 <div className="flex items-center space-x-4">
-                                    <a
+                                    <Link
                                         href="https://github.com/abizareyhan"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="transition-colors duration-300 hover:text-white"
                                     >
                                         <SiGithub className="h-5 w-5" />
-                                    </a>
-                                    <a
+                                    </Link>
+                                    <Link
                                         href="https://linkedin.com/in/abizareyhan"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="transition-colors duration-300 hover:text-white"
                                     >
                                         <SiLinkedin className="h-5 w-5" />
-                                    </a>
+                                    </Link>
+                                    <Link
+                                        href="mailto:hi@abizareyhan.com"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="transition-colors duration-300 hover:text-white"
+                                    >
+                                        <SiGmail className="h-5 w-5" />
+                                    </Link>
                                 </div>
                             </footer>
                         </div>
@@ -150,7 +158,7 @@ export default function RootLayout({
                                     onClick={handleCloseDialog}
                                 >
                                     <motion.div
-                                        className="relative w-full max-w-lg transform overflow-hidden rounded-xl border border-white/10 bg-[#2B3134]/30 text-left shadow-2xl backdrop-blur"
+                                        className="relative m-8 w-full max-w-lg transform overflow-hidden rounded-xl border border-white/10 bg-[#2B3134]/30 text-left shadow-2xl backdrop-blur"
                                         initial={{ scale: 0.95, opacity: 0 }}
                                         animate={{ scale: 1, opacity: 1 }}
                                         exit={{ scale: 0.95, opacity: 0 }}
@@ -256,22 +264,30 @@ const AboutDialog = () => {
                     Last updated {lastUpdated.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                 </span>
                 <div className="flex-1"></div>
-                <a
+                <Link
                     href="https://github.com/abizareyhan"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transition-colors duration-300 hover:text-white"
                 >
                     <SiGithub className="h-5 w-5" />
-                </a>
-                <a
+                </Link>
+                <Link
                     href="https://linkedin.com/in/abizareyhan"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transition-colors duration-300 hover:text-white"
                 >
                     <SiLinkedin className="h-5 w-5" />
-                </a>
+                </Link>
+                <Link
+                    href="mailto:hi@abizareyhan.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors duration-300 hover:text-white"
+                >
+                    <SiGmail className="h-5 w-5" />
+                </Link>
             </div>
         </div>
     );
