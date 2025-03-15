@@ -53,11 +53,12 @@ export default function RootLayout({
     return (
         <html lang="en">
             <link rel="icon" href="/favicon.ico" sizes="any" />
+            <meta name="theme-color" content="#16106E" />
             <title>Reyhan Abizar - Software Engineer</title>
 
             <body className={plusJakartaSans.className}>
                 <SearchProvider>
-                    <div className="h-screen w-full select-none bg-[url('https://images.unsplash.com/photo-1689005046800-38a1f4f47a51?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] p-6">
+                    <div className="h-dvh w-full select-none bg-[url('https://images.unsplash.com/photo-1689005046800-38a1f4f47a51?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] p-6">
                         <div className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-black/30 shadow-2xl backdrop-blur-xl">
                             <div className="flex flex-col border-b border-white/10 px-4 md:h-16 md:flex-row md:items-center md:justify-between">
                                 <div className="flex items-center justify-between py-4 md:py-0">
@@ -198,7 +199,7 @@ export default function RootLayout({
 }
 
 const AboutDialog = () => {
-    const lastUpdated = new Date("2024-12-18T15:00:00+07:00");
+    const lastUpdated = new Date("2024-03-01T15:00:00+07:00");
 
     return (
         <div className="flex w-full flex-col items-center space-y-4 p-4">
@@ -260,7 +261,7 @@ const AboutDialog = () => {
                 </div>
             </div>
             <div className="flex w-full justify-end space-x-4 text-white/70">
-                <span className="text-xs">
+                <span className="text-start text-xs">
                     Last updated {lastUpdated.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                 </span>
                 <div className="flex-1"></div>

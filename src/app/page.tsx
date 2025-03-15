@@ -206,7 +206,7 @@ const fuseOptions = {
 const fuse = new Fuse(files, fuseOptions);
 
 export default function Home() {
-    const { searchQuery } = useSearch();
+    const { searchQuery, setSearchQuery } = useSearch();
 
     const [currentFolder, setCurrentFolder] = useState("all-projects");
 
@@ -257,25 +257,31 @@ export default function Home() {
 
     // Custom folder selection handler for mobile
     const handleFolderSelect = (folderId: string) => {
+        const transitionDelay = isMobile ? 300 : 0;
+
         if (isMobile) {
             setMobileViewState("files");
+            setSearchQuery("");
         }
 
         setTimeout(() => {
             setCurrentFolder(folderId);
             setCurrentFile(null);
-        }, 250);
+        }, transitionDelay);
     };
 
     // Custom file selection handler for mobile
     const handleFileSelect = (file: File) => {
+        const transitionDelay = isMobile ? 250 : 0;
+
         if (isMobile) {
             setMobileViewState("preview");
+            setSearchQuery("");
         }
 
         setTimeout(() => {
             setCurrentFile(file);
-        }, 100);
+        }, transitionDelay);
     };
 
     // Handle back button press
@@ -303,7 +309,7 @@ export default function Home() {
                 />
             </div>
             <div className={`md:block md:w-[480px] ${mobileViewState === "preview" ? "flex w-full" : "hidden"}`}>
-                <FilePreview currentFile={currentFile} onBack={handleBack} showBackButton={mobileViewState === "preview"} />
+                <FilePreview currentFile={currentFile} onBack={handleBack} showBackButton={mobileViewState === "preview"}></FilePreview>
             </div>
         </div>
     );
