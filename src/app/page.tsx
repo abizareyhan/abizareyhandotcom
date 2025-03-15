@@ -72,7 +72,7 @@ const files: File[] = [
             description: "An early version of the Zenius Mobile app, built with Flutter, offering video lessons and practice exercises.",
             startDate: new Date("2019-05-01"),
             endDate: new Date("2020-05-31"),
-            thumbnail: "/img_preview_placeholder.png",
+            thumbnail: "/img_preview_zenius_v1.png",
             tags: ["Android", "iOS", "Flutter"],
         },
     },
