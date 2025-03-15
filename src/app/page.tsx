@@ -58,7 +58,7 @@ const files: File[] = [
         metadata: {
             description: "An educational app for students in Indonesia that provides video lessons, exercises, live classes, and tryouts.",
             startDate: new Date("2020-02-01"),
-            endDate: new Date("2023-01-31"),
+            endDate: new Date("2022-08-31"),
             thumbnail: "/img_preview_zenius_v2.avif",
             tags: ["Android", "Kotlin"],
         },

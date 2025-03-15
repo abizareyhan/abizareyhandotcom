@@ -18,9 +18,11 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const [selectedDialog, setSelectedDialog] = useState<null | "about" | "blog-confirmation">(null);
+    const [selectedDialog, setSelectedDialog] = useState<
+        null | "about" | "blog-confirmation" | "linkedin-fonsmans" | "github" | "linkedin" | "certificate"
+    >(null);
 
-    const handleOpenDialog = (dialog: "about" | "blog-confirmation") => {
+    const handleOpenDialog = (dialog: "about" | "blog-confirmation" | "linkedin-fonsmans" | "github" | "linkedin" | "certificate") => {
         setSelectedDialog(dialog);
     };
 
@@ -33,6 +35,10 @@ export default function RootLayout({
             case "about":
                 return "About";
             case "blog-confirmation":
+            case "linkedin-fonsmans":
+            case "github":
+            case "linkedin":
+            case "certificate":
                 return "Confirm";
             default:
                 return null;
@@ -42,9 +48,20 @@ export default function RootLayout({
     const renderDialogContent = () => {
         switch (selectedDialog) {
             case "about":
-                return <AboutDialog />;
+                return <AboutDialog handleOpenDialog={handleOpenDialog} />;
             case "blog-confirmation":
                 return ConfirmationOpenLinkDialog("https://blog.abizareyhan.com", setSelectedDialog);
+            case "linkedin-fonsmans":
+                return ConfirmationOpenLinkDialog(
+                    "https://www.linkedin.com/posts/fonsmans_finder-portfolio-made-in-framer-activity-7266038502004338690-lpg5",
+                    setSelectedDialog,
+                );
+            case "github":
+                return ConfirmationOpenLinkDialog("https://github.com/abizareyhan", setSelectedDialog);
+            case "linkedin":
+                return ConfirmationOpenLinkDialog("https://linkedin.com/in/abizareyhan", setSelectedDialog);
+            case "certificate":
+                return ConfirmationOpenLinkDialog("https://www.credential.net/706e4c15-202e-4d6d-a386-fb3631821700", setSelectedDialog);
             default:
                 return null;
         }
@@ -56,7 +73,7 @@ export default function RootLayout({
             <meta name="theme-color" content="#16106E" />
             <title>Reyhan Abizar - Software Engineer</title>
 
-            <body className={plusJakartaSans.className}>
+            <body className={`${plusJakartaSans.className} overflow-hidden`}>
                 <SearchProvider>
                     <div className="h-dvh w-full select-none bg-[url('https://images.unsplash.com/photo-1689005046800-38a1f4f47a51?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] p-6">
                         <div className="flex h-full w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-black/30 shadow-2xl backdrop-blur-xl">
@@ -111,40 +128,23 @@ export default function RootLayout({
                             <footer className="flex h-12 items-center justify-between border-t border-white/10 px-4 text-sm text-white/70">
                                 <div>
                                     Inspired by{" "}
-                                    <a
-                                        href="https://www.linkedin.com/posts/fonsmans_finder-portfolio-made-in-framer-activity-7266038502004338690-lpg5/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="transition-colors duration-300 hover:text-white"
+                                    <button
+                                        onClick={() => handleOpenDialog("linkedin-fonsmans")}
+                                        className="inline-block text-white/70 transition-colors duration-300 hover:text-white"
                                     >
                                         Fons Mans
-                                    </a>
+                                    </button>
                                 </div>
                                 <div className="flex items-center space-x-4">
-                                    <Link
-                                        href="https://github.com/abizareyhan"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="transition-colors duration-300 hover:text-white"
-                                    >
+                                    <button onClick={() => handleOpenDialog("github")} className="transition-colors duration-300 hover:text-white">
                                         <SiGithub className="h-5 w-5" />
-                                    </Link>
-                                    <Link
-                                        href="https://linkedin.com/in/abizareyhan"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="transition-colors duration-300 hover:text-white"
-                                    >
+                                    </button>
+                                    <button onClick={() => handleOpenDialog("linkedin")} className="transition-colors duration-300 hover:text-white">
                                         <SiLinkedin className="h-5 w-5" />
-                                    </Link>
-                                    <Link
-                                        href="mailto:hi@abizareyhan.com"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="transition-colors duration-300 hover:text-white"
-                                    >
+                                    </button>
+                                    <a href="mailto:hi@abizareyhan.com" className="transition-colors duration-300 hover:text-white">
                                         <SiGmail className="h-5 w-5" />
-                                    </Link>
+                                    </a>
                                 </div>
                             </footer>
                         </div>
@@ -198,7 +198,11 @@ export default function RootLayout({
     );
 }
 
-const AboutDialog = () => {
+const AboutDialog = ({
+    handleOpenDialog,
+}: {
+    handleOpenDialog: (dialog: "about" | "blog-confirmation" | "linkedin-fonsmans" | "github" | "linkedin" | "certificate") => void;
+}) => {
     const lastUpdated = new Date("2024-03-01T15:00:00+07:00");
 
     return (
@@ -235,14 +239,13 @@ const AboutDialog = () => {
                                 Google Play Academy - Store Listing Certificate
                             </span>
                             <div className="flex max-w-full flex-col flex-wrap items-end space-y-2 break-words text-end">
-                                <Link
+                                <button
                                     className="shadow-apple relative w-auto rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
-                                    href="https://www.credential.net/706e4c15-202e-4d6d-a386-fb3631821700"
-                                    target="_blank"
+                                    onClick={() => handleOpenDialog("certificate")}
                                 >
                                     <span className="absolute inset-0 rounded-[5px] bg-gradient-to-b from-white to-transparent opacity-[.17]"></span>
                                     View Certificate
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div> */}
@@ -265,30 +268,15 @@ const AboutDialog = () => {
                     Last updated {lastUpdated.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
                 </span>
                 <div className="flex-1"></div>
-                <Link
-                    href="https://github.com/abizareyhan"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-colors duration-300 hover:text-white"
-                >
+                <button onClick={() => handleOpenDialog("github")} className="transition-colors duration-300 hover:text-white">
                     <SiGithub className="h-5 w-5" />
-                </Link>
-                <Link
-                    href="https://linkedin.com/in/abizareyhan"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-colors duration-300 hover:text-white"
-                >
+                </button>
+                <button onClick={() => handleOpenDialog("linkedin")} className="transition-colors duration-300 hover:text-white">
                     <SiLinkedin className="h-5 w-5" />
-                </Link>
-                <Link
-                    href="mailto:hi@abizareyhan.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-colors duration-300 hover:text-white"
-                >
+                </button>
+                <a href="mailto:hi@abizareyhan.com" className="transition-colors duration-300 hover:text-white">
                     <SiGmail className="h-5 w-5" />
-                </Link>
+                </a>
             </div>
         </div>
     );
