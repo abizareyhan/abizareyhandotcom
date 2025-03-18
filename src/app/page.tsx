@@ -14,6 +14,7 @@ import { useSearch } from "@/lib/SearchContext";
 
 const folders: Folder[] = [
     { id: "all-projects", name: "All Projects", icon: "/ic_macos_default_folder.png" },
+    { id: "pgi-data", name: "Platinumetrix Global Inovasi", icon: "/ic_macos_default_folder.png" },
     { id: "gravel", name: "Gravel", icon: "/ic_macos_default_folder.png" },
     { id: "zenius", name: "Zenius", icon: "/ic_macos_default_folder.png" },
     { id: "kisel", name: "Kisel Indonesia", icon: "/ic_macos_default_folder.png" },
@@ -24,6 +25,33 @@ const folders: Folder[] = [
 ];
 
 const files: File[] = [
+    {
+        id: "gomamam-customer",
+        name: "GoMamam",
+        iconPath: "/ic_file_android.png",
+        folder: ["all-projects", "pgi-data"],
+        metadata: {
+            description: "A food delivery app for customers in Brunei to browse restaurants, place orders, and track deliveries in real-time.",
+            startDate: new Date("2024-11-01"),
+            endDate: new Date("2025-05-31"),
+            thumbnail: "/img_preview_placeholder.png",
+            tags: ["Android", "Kotlin"],
+        },
+    },
+    {
+        id: "gomamam-partner",
+        name: "GoMamam Partner",
+        iconPath: "/ic_file_android.png",
+        folder: ["all-projects", "pgi-data"],
+        metadata: {
+            description:
+                "A companion app for restaurants and drivers in Brunei to manage orders, track deliveries, and process payments on the GoMamam platform.",
+            startDate: new Date("2024-11-01"),
+            endDate: new Date("2025-05-31"),
+            thumbnail: "/img_preview_placeholder.png",
+            tags: ["Android", "Kotlin"],
+        },
+    },
     {
         id: "gravel-android",
         name: "Gravel",
@@ -99,7 +127,6 @@ const files: File[] = [
             startDate: new Date("2018-07-01"),
             endDate: new Date("2019-04-30"),
             thumbnail: "/img_preview_placeholder.png",
-            tags: ["Android", "Java", "Kotlin"],
         },
     },
     {
@@ -135,6 +162,7 @@ const files: File[] = [
         folder: ["all-projects", "personal"],
         metadata: {
             description: "A concept of text based life simulation game with real world maps",
+            thumbnail: "/img_preview_placeholder.png",
             tags: ["Android", "Kotlin", "Game"],
         },
     },
