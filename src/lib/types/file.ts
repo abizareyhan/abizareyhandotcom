@@ -10,4 +10,9 @@ export interface File {
         thumbnail?: string;
         tags?: string[];
     };
+    actions?: {
+        title: string;
+        enabled: boolean;
+        onClick: () => void;
+    }[];
 }

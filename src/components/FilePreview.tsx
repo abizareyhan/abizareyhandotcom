@@ -68,6 +68,24 @@ const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBack
                                         </div>
                                     </div>
                                 )}
+                                {currentFile.actions && (
+                                    <div className="flex justify-between">
+                                        <span className="text-white/40">Actions</span>
+                                        <div className="flex flex-wrap justify-end gap-2">
+                                            {currentFile.actions.map((action) => (
+                                                <button
+                                                    className="shadow-apple relative w-auto rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
+                                                    key={action.title}
+                                                    onClick={action.onClick}
+                                                    disabled={!action.enabled}
+                                                >
+                                                    <span className="absolute inset-0 rounded-[5px] bg-gradient-to-b from-white to-transparent opacity-[.17]"></span>
+                                                    {action.title}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </motion.div>

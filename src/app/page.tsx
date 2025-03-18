@@ -46,7 +46,7 @@ const files: File[] = [
             description: "An app for construction workers to find jobs, track their attendance, report progress, and receive payments.",
             startDate: new Date("2023-02-01"),
             endDate: new Date("2024-10-31"),
-            thumbnail: "/img_preview_placeholder.png",
+            thumbnail: "/img_preview_gravel_dulur.avif",
             tags: ["Android", "Kotlin"],
         },
     },
