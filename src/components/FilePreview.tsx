@@ -8,9 +8,19 @@ interface FilePreviewProps {
     currentFile: File | null;
     onBack?: () => void;
     showBackButton?: boolean;
+    // New props for external dialog control
+    onOpenImageDialog?: (imageUrl: string, imageAlt: string) => void;
 }
 
-const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBackButton = false }) => {
+const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBackButton = false, onOpenImageDialog }) => {
+    // Remove the internal popup state and effect
+
+    const handleThumbnailClick = () => {
+        if (currentFile?.metadata?.thumbnail && onOpenImageDialog) {
+            onOpenImageDialog(currentFile.metadata.thumbnail, currentFile.name || "Image preview");
+        }
+    };
+
     return (
         <div className="h-full w-full space-y-4 overflow-y-auto border-l border-white/10 p-4 md:w-[480px]">
             {showBackButton && (
@@ -29,7 +39,10 @@ const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBack
                         transition={{ duration: 0.1, ease: "easeInOut" }}
                     >
                         {currentFile.metadata?.thumbnail && (
-                            <div className="relative aspect-[2204/1536] overflow-hidden rounded-lg bg-white/5">
+                            <div
+                                className="relative aspect-[2204/1536] cursor-pointer overflow-hidden rounded-lg bg-white/5"
+                                onClick={handleThumbnailClick}
+                            >
                                 <Image src={currentFile.metadata?.thumbnail} alt="" fill className="object-cover" />
                             </div>
                         )}
@@ -104,6 +117,8 @@ const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBack
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Remove the Image Popup implementation */}
         </div>
     );
 };

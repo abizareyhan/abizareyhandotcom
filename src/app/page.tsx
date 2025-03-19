@@ -5,12 +5,16 @@ import Fuse from "fuse.js";
 import { useState, useEffect, useCallback } from "react";
 import { File } from "@/lib/types/file";
 import { Folder } from "@/lib/types/folder";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 
 import FolderList from "@/components/FolderList";
 import FileList from "@/components/FileList";
 import FilePreview from "@/components/FilePreview";
 
 import { useSearch } from "@/lib/SearchContext";
+import { useDialog } from "./layout"; // Import the dialog context
 
 const folders: Folder[] = [
     { id: "all-projects", name: "All Projects", icon: "/ic_macos_default_folder.png" },
@@ -233,6 +237,7 @@ const fuse = new Fuse(files, fuseOptions);
 
 export default function Home() {
     const { searchQuery, setSearchQuery } = useSearch();
+    const { openDialog } = useDialog(); // Use the dialog context
 
     const [currentFolder, setCurrentFolder] = useState("all-projects");
 
@@ -319,6 +324,11 @@ export default function Home() {
         }
     };
 
+    // Handler for opening the image dialog using the shared dialog component
+    const handleOpenImageDialog = (imageUrl: string, imageAlt: string) => {
+        openDialog("image-preview", { url: imageUrl, alt: imageAlt });
+    };
+
     return (
         <div className="flex h-full w-full flex-row md:flex md:flex-row">
             <div className={`md:block md:w-80 ${mobileViewState === "folders" ? "flex w-full" : "hidden"}`}>
@@ -335,7 +345,12 @@ export default function Home() {
                 />
             </div>
             <div className={`md:block md:w-[480px] ${mobileViewState === "preview" ? "flex w-full" : "hidden"}`}>
-                <FilePreview currentFile={currentFile} onBack={handleBack} showBackButton={mobileViewState === "preview"}></FilePreview>
+                <FilePreview
+                    currentFile={currentFile}
+                    onBack={handleBack}
+                    showBackButton={mobileViewState === "preview"}
+                    onOpenImageDialog={handleOpenImageDialog}
+                />
             </div>
         </div>
     );
