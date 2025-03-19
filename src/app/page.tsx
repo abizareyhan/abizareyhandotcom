@@ -33,9 +33,8 @@ const files: File[] = [
         metadata: {
             description: "A food delivery app for customers in Brunei to browse restaurants, place orders, and track deliveries in real-time.",
             startDate: new Date("2024-11-01"),
-            endDate: new Date("2025-05-31"),
-            thumbnail: "/img_preview_placeholder.png",
-            tags: ["Android", "Kotlin"],
+            thumbnail: "/img_preview_gomamam.avif",
+            tags: ["Android", "Kotlin", "Java"],
         },
     },
     {
@@ -47,9 +46,8 @@ const files: File[] = [
             description:
                 "A companion app for restaurants and drivers in Brunei to manage orders, track deliveries, and process payments on the GoMamam platform.",
             startDate: new Date("2024-11-01"),
-            endDate: new Date("2025-05-31"),
-            thumbnail: "/img_preview_placeholder.png",
-            tags: ["Android", "Kotlin"],
+            thumbnail: "/img_preview_gomamam_partner.avif",
+            tags: ["Android", "Kotlin", "Java"],
         },
     },
     {
@@ -61,7 +59,7 @@ const files: File[] = [
             description: "An app that helps people in Indonesia find and hire construction workers easily.",
             startDate: new Date("2023-02-01"),
             endDate: new Date("2024-10-31"),
-            thumbnail: "/img_preview_placeholder.png",
+            thumbnail: "/img_preview_gravel.avif",
             tags: ["Android", "Kotlin"],
         },
     },
@@ -152,7 +150,7 @@ const files: File[] = [
             startDate: new Date("2023-08-01"),
             endDate: new Date("2023-10-31"),
             thumbnail: "/img_preview_placeholder.png",
-            tags: ["Android", "iOS", "Kotlin Multiplatform", "SwiftUI"],
+            tags: ["Android", "iOS", "Kotlin Multiplatform", "SwiftUI", "Jetpack Compose"],
         },
     },
     {

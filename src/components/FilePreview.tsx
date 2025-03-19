@@ -40,7 +40,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBack
                             </div>
 
                             <div className="space-y-2">
-                                {currentFile.metadata?.startDate && currentFile.metadata?.endDate && (
+                                {currentFile.metadata?.startDate && (
                                     <div className="flex justify-between space-x-2">
                                         <span className="text-white/40">Date</span>
                                         <span className="text-white/90">
@@ -49,10 +49,12 @@ const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBack
                                                 month: "long",
                                             })}{" "}
                                             -{" "}
-                                            {currentFile.metadata?.endDate?.toLocaleDateString("en-US", {
-                                                year: "numeric",
-                                                month: "long",
-                                            })}
+                                            {currentFile.metadata?.endDate
+                                                ? currentFile.metadata.endDate.toLocaleDateString("en-US", {
+                                                      year: "numeric",
+                                                      month: "long",
+                                                  })
+                                                : "Present"}
                                         </span>
                                     </div>
                                 )}
