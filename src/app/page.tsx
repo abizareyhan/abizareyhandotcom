@@ -14,7 +14,7 @@ import FileList from "@/components/FileList";
 import FilePreview from "@/components/FilePreview";
 
 import { useSearch } from "@/lib/SearchContext";
-import { useDialog } from "./layout"; // Import the dialog context
+import { useDialog } from "@/lib/DialogContext";
 
 const folders: Folder[] = [
     { id: "all-projects", name: "All Projects", icon: "/ic_macos_default_folder.png" },
