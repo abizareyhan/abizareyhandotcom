@@ -5,9 +5,6 @@ import Fuse from "fuse.js";
 import { useState, useEffect, useCallback } from "react";
 import { File } from "@/lib/types/file";
 import { Folder } from "@/lib/types/folder";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
 
 import FolderList from "@/components/FolderList";
 import FileList from "@/components/FileList";
@@ -140,7 +137,7 @@ const files: File[] = [
             description: "An app that helps Lexus users book services, find exclusive parking spots, and contact a concierge for assistance anytime.",
             startDate: new Date("2019-07-01"),
             endDate: new Date("2019-09-30"),
-            thumbnail: "/img_preview_lexus.png",
+            thumbnail: "/img_preview_lexus.avif",
             tags: ["Android", "iOS", "Flutter"],
         },
     },
@@ -153,7 +150,7 @@ const files: File[] = [
             description: "An app made for nutrition doctors to calculate patient diets and manage their prescriptions easily.",
             startDate: new Date("2023-08-01"),
             endDate: new Date("2023-10-31"),
-            thumbnail: "/img_preview_nutri_cal.png",
+            thumbnail: "/img_preview_nutri_cal.avif",
             tags: ["Android", "iOS", "Kotlin Multiplatform", "SwiftUI", "Jetpack Compose"],
         },
     },
