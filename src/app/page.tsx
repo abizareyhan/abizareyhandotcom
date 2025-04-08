@@ -25,7 +25,7 @@ const folders: Folder[] = [
     { id: "freelance", name: "Freelance", icon: "/ic_macos_default_folder.png" },
     { id: "personal", name: "Personal", icon: "/ic_macos_default_folder.png" },
     { id: "blog-posts", name: "Blog Posts", icon: "/ic_file_notes.png" },
-    { id: "others", name: "Others", icon: "/ic_file_launchpad.png" },
+    // { id: "others", name: "Others", icon: "/ic_file_launchpad.png" },
 ];
 
 const files: File[] = [
@@ -115,7 +115,7 @@ const files: File[] = [
             description: "An app for Warung owners to handle PPOB transactions quickly and efficiently.",
             startDate: new Date("2018-07-01"),
             endDate: new Date("2019-04-30"),
-            thumbnail: "/img_preview_placeholder.png",
+            // thumbnail: "/img_preview_placeholder.png",
             tags: ["Android", "Java", "Kotlin"],
         },
     },
@@ -128,7 +128,7 @@ const files: File[] = [
             description: "An app for Kisel Indonesia staff to visit and register new Warung owners as partners.",
             startDate: new Date("2018-07-01"),
             endDate: new Date("2019-04-30"),
-            thumbnail: "/img_preview_placeholder.png",
+            // thumbnail: "/img_preview_placeholder.png",
         },
     },
     {
@@ -140,7 +140,7 @@ const files: File[] = [
             description: "An app that helps Lexus users book services, find exclusive parking spots, and contact a concierge for assistance anytime.",
             startDate: new Date("2019-07-01"),
             endDate: new Date("2019-09-30"),
-            thumbnail: "/img_preview_placeholder.png",
+            thumbnail: "/img_preview_lexus.png",
             tags: ["Android", "iOS", "Flutter"],
         },
     },
@@ -153,31 +153,31 @@ const files: File[] = [
             description: "An app made for nutrition doctors to calculate patient diets and manage their prescriptions easily.",
             startDate: new Date("2023-08-01"),
             endDate: new Date("2023-10-31"),
-            thumbnail: "/img_preview_placeholder.png",
+            thumbnail: "/img_preview_nutri_cal.png",
             tags: ["Android", "iOS", "Kotlin Multiplatform", "SwiftUI", "Jetpack Compose"],
         },
     },
-    {
-        id: "yoctolife",
-        name: "YoctoLife",
-        iconPath: "/ic_file_kotlin.png",
-        folder: ["all-projects", "personal"],
-        metadata: {
-            description: "A concept of text based life simulation game with real world maps",
-            thumbnail: "/img_preview_placeholder.png",
-            tags: ["Android", "Kotlin", "Game"],
-        },
-    },
-    {
-        id: "yakado",
-        name: "YaKado",
-        iconPath: "/ic_file_nextjs.png",
-        folder: ["all-projects", "personal"],
-        metadata: {
-            description: "An app that helps Indonesian people to find the perfect gift for any occasion with a simple and easy way.",
-            tags: ["Web", "Next.js", "React", "Tailwind CSS"],
-        },
-    },
+    // {
+    //     id: "yoctolife",
+    //     name: "YoctoLife",
+    //     iconPath: "/ic_file_kotlin.png",
+    //     folder: ["all-projects", "personal"],
+    //     metadata: {
+    //         description: "A concept of text based life simulation game with real world maps",
+    //         thumbnail: "/img_preview_placeholder.png",
+    //         tags: ["Android", "Kotlin", "Game"],
+    //     },
+    // },
+    // {
+    //     id: "yakado",
+    //     name: "YaKado",
+    //     iconPath: "/ic_file_nextjs.png",
+    //     folder: ["all-projects", "personal"],
+    //     metadata: {
+    //         description: "An app that helps Indonesian people to find the perfect gift for any occasion with a simple and easy way.",
+    //         tags: ["Web", "Next.js", "React", "Tailwind CSS"],
+    //     },
+    // },
     {
         id: "playpublish",
         name: "PlayPublish",
