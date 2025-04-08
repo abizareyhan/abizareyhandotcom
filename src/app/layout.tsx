@@ -281,7 +281,9 @@ const AboutDialog = ({
                         <div className="flex max-w-full flex-col flex-wrap items-end space-y-2 break-words text-end">
                             <button
                                 className="shadow-apple relative w-auto rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
-                                onClick={() => {}}
+                                onClick={() => {
+                                    window.open("https://pub-bd9ed73e73e94e91ad1c4becf1aef841.r2.dev/resume.pdf", "_blank");
+                                }}
                             >
                                 <span className="absolute inset-0 rounded-[5px] bg-gradient-to-b from-white to-transparent opacity-[.17]"></span>
                                 Download
