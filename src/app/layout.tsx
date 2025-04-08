@@ -5,28 +5,14 @@ import "./globals.css";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { SiGithub, SiGmail, SiLinkedin } from "@icons-pack/react-simple-icons";
 import Image from "next/image";
-import React, { useState, createContext, useContext } from "react";
+import React, { useState } from "react";
 import { SearchProvider } from "@/lib/SearchContext";
 import SearchBar from "@/components/SearchBar";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import DialogContext, { DialogType } from "@/lib/DialogContext";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
-
-// Create a context for dialog functionality
-type DialogContextType = {
-    openDialog: (dialogType: DialogType, dialogData?: any) => void;
-    closeDialog: () => void;
-};
-
-type DialogType = "about" | "blog-confirmation" | "linkedin-fonsmans" | "github" | "linkedin" | "certificate" | "image-preview"; // Add new dialog type for image preview
-
-const DialogContext = createContext<DialogContextType>({
-    openDialog: () => {},
-    closeDialog: () => {},
-});
-
-export const useDialog = () => useContext(DialogContext);
 
 export default function RootLayout({
     children,
