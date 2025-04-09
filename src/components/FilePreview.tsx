@@ -1,19 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { File } from "@/lib/types/file";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
+import { useDialog } from "@/lib/DialogContext";
 
 interface FilePreviewProps {
     currentFile: File | null;
     onBack?: () => void;
     showBackButton?: boolean;
-    // New props for external dialog control
     onOpenImageDialog?: (imageUrl: string, imageAlt: string) => void;
 }
 
 const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBackButton = false, onOpenImageDialog }) => {
-    // Remove the internal popup state and effect
+    const { openDialog } = useDialog();
+    const [effectiveActions, setEffectiveActions] = useState(currentFile?.actions || []);
+
+    useEffect(() => {
+        if (currentFile) {
+            const urlAction = currentFile.metadata?.url
+                ? [
+                      {
+                          title: "Open",
+                          enabled: true,
+                          onClick: () => openDialog("blog-confirmation", { url: currentFile.metadata?.url }),
+                      },
+                  ]
+                : [];
+
+            setEffectiveActions([...urlAction, ...(currentFile.actions || [])]);
+        } else {
+            setEffectiveActions([]);
+        }
+    }, [currentFile, openDialog]);
 
     const handleThumbnailClick = () => {
         if (currentFile?.metadata?.thumbnail && onOpenImageDialog) {
@@ -83,11 +102,11 @@ const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBack
                                         </div>
                                     </div>
                                 )}
-                                {currentFile.actions && (
+                                {effectiveActions.length > 0 && (
                                     <div className="flex justify-between">
                                         <span className="text-white/40">Actions</span>
                                         <div className="flex flex-wrap justify-end gap-2">
-                                            {currentFile.actions.map((action) => (
+                                            {effectiveActions.map((action) => (
                                                 <button
                                                     className="shadow-apple relative w-auto rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
                                                     key={action.title}
@@ -117,8 +136,6 @@ const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBack
                     </motion.div>
                 )}
             </AnimatePresence>
-
-            {/* Remove the Image Popup implementation */}
         </div>
     );
 };

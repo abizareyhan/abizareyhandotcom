@@ -191,8 +191,11 @@ const files: File[] = [
         iconPath: "/ic_file_notes.png",
         folder: ["blog-posts"],
         metadata: {
-            description: "Learn how to implement Google Play In-App Updates in your Android app to provide a seamless user experience.",
+            description:
+                "A comprehensive guide on implementing Google Play's In-App Updates in Android apps. Learn how to set up both Flexible and Immediate update flows, handle user interactions, and ensure a smooth update experience for your users.",
             tags: ["Android", "Google Play Store", "In-App Updates"],
+            url: "https://blog.abizareyhan.com/google-play-in-app-updates-step-by-step/",
+            thumbnail: "https://blog.abizareyhan.com/content/images/size/w1140/2025/04/1_A9OejVSjDqpTGthHTADCSw.png",
         },
     },
     {
@@ -201,8 +204,11 @@ const files: File[] = [
         iconPath: "/ic_file_notes.png",
         folder: ["blog-posts"],
         metadata: {
-            description: "Discover how to create dynamic app icons on Android using activity-alias to provide a personalized experience for users.",
+            description:
+                "A technical deep dive into implementing dynamic app icons on Android using activity-alias in the manifest file. Discover how popular apps like Discord and Twitter achieve icon switching, with practical code examples and best practices.",
             tags: ["Android", "App Icons", "Activity-Alias"],
+            url: "https://blog.abizareyhan.com/dynamic-app-icon-on-android/",
+            thumbnail: "https://blog.abizareyhan.com/content/images/size/w1140/2025/04/Thumbnail.png",
         },
     },
     {
@@ -211,8 +217,66 @@ const files: File[] = [
         iconPath: "/ic_file_notes.png",
         folder: ["blog-posts"],
         metadata: {
-            description: "Learn how to use robots.txt to control search engine crawlers and prevent specific pages from appearing in search results.",
+            description:
+                "An in-depth exploration of robots.txt, the crucial file that controls search engine behavior. Learn about its syntax, common use cases, and how to effectively manage search engine crawling and indexing of your website content.",
             tags: ["SEO", "Robots.txt", "Search Engine"],
+            url: "https://blog.abizareyhan.com/hide-and-seek-with-search-engine-using-robots-txt/",
+            thumbnail: "https://blog.abizareyhan.com/content/images/size/w1140/2025/04/photo-1563209259-2819dbb22d93.jpeg",
+        },
+    },
+    {
+        id: "blog-understanding-the-important-of-accessibility",
+        name: "Understanding The Important Of Accessibility",
+        iconPath: "/ic_file_notes.png",
+        folder: ["blog-posts"],
+        metadata: {
+            description:
+                "A comprehensive overview of digital accessibility (a11y) and its crucial role in modern technology. Explore key concepts, implementation strategies, and real-world examples of inclusive design in websites, apps, and gaming platforms.",
+            tags: ["Accessibility", "User Experience"],
+            url: "https://blog.abizareyhan.com/understanding-the-important-of-accessibility/",
+            thumbnail: "https://blog.abizareyhan.com/content/images/size/w1140/2025/04/9dffb9047212d33921346b42f2b4f99fe52e5876-scaled.jpg",
+        },
+    },
+    {
+        id: "blog-refactor-isnt-always-the-right-answer",
+        name: "Refactor Isn't Always the Right Answer",
+        iconPath: "/ic_file_notes.png",
+        folder: ["blog-posts"],
+        metadata: {
+            description:
+                "A critical examination of when code refactoring might do more harm than good. Explore the hidden costs of refactoring, learn to identify when to leave working code alone, and understand how to make better engineering decisions for your team.",
+            tags: ["Code Quality", "Software Development"],
+            url: "https://blog.abizareyhan.com/refactor-isnt-always-the-right-answer/",
+            thumbnail:
+                "https://images.unsplash.com/photo-1556075798-4825dfaaf498?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDN8fGdpdGh1YnxlbnwwfHx8fDE3NDQxMjk4ODh8MA&ixlib=rb-4.0.3&q=80&w=960",
+        },
+    },
+    {
+        id: "blog-why-silent-quick-fixes-hurt-your-team",
+        name: "Why Silent Quick Fixes Hurt Your Team",
+        iconPath: "/ic_file_notes.png",
+        folder: ["blog-posts"],
+        metadata: {
+            description:
+                "An analysis of how undocumented quick fixes can accumulate technical debt and harm team collaboration. Learn about the importance of communication in software development and strategies to maintain code quality while fixing urgent issues.",
+            tags: ["Team Collaboration", "Communication"],
+            url: "https://blog.abizareyhan.com/why-silent-quick-fixes-hurt-your-team/",
+            thumbnail:
+                "https://images.unsplash.com/photo-1583413230888-c7b03057be03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDI0fHxicm9rZW4lMjBzY3JlZW58ZW58MHx8fHwxNzQ0MTMwOTI1fDA&ixlib=rb-4.0.3&q=80&w=960",
+        },
+    },
+    {
+        id: "blog-the-tool-obsession-killing-tech-talent",
+        name: "The Tool Obsession Killing Tech Talent",
+        iconPath: "/ic_file_notes.png",
+        folder: ["blog-posts"],
+        metadata: {
+            description:
+                "A critical look at how excessive focus on specific tools and frameworks affects tech hiring. Explore why fundamental engineering skills matter more than tool expertise, and how companies can improve their hiring processes.",
+            tags: ["Careers"],
+            url: "https://blog.abizareyhan.com/the-tool-obsession-killing-tech-talent/",
+            thumbnail:
+                "https://images.unsplash.com/photo-1513258496099-48168024aec0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxMTc3M3wwfDF8c2VhcmNofDV8fEZydXN0cmF0ZWQlMjBwcm9ncmFtbWVyJTIwYXQlMjBjb21wdXRlcnxlbnwwfHx8fDE3NDQxMjc1MDN8MA&ixlib=rb-4.0.3&q=80&w=960",
         },
     },
 ];

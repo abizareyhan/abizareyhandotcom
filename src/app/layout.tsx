@@ -58,7 +58,7 @@ export default function RootLayout({
             case "about":
                 return <AboutDialog handleOpenDialog={handleOpenDialog} />;
             case "blog-confirmation":
-                return ConfirmationOpenLinkDialog("https://blog.abizareyhan.com", closeDialog);
+                return ConfirmationOpenLinkDialog(dialogData?.url || "https://blog.abizareyhan.com", closeDialog);
             case "linkedin-fonsmans":
                 return ConfirmationOpenLinkDialog(
                     "https://www.linkedin.com/posts/fonsmans_finder-portfolio-made-in-framer-activity-7266038502004338690-lpg5",

@@ -9,6 +9,7 @@ export interface File {
         endDate?: Date;
         thumbnail?: string;
         tags?: string[];
+        url?: string;
     };
     actions?: {
         title: string;
