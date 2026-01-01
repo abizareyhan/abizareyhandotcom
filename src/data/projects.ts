@@ -135,6 +135,7 @@ export const files: File[] = [
         metadata: {
             description: "A simple CLI tool to automate the process of uploading Android apps to Google Play Store.",
             tags: ["CLI", "Node.js", "Google Play Store"],
+            url: "https://www.npmjs.com/package/playpublish",
         },
     },
     {
