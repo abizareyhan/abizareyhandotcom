@@ -41,7 +41,7 @@ const FileList: React.FC<FileListProps> = ({ files, filteredFiles, setCurrentFil
                                     currentFile?.id === file.id ? "bg-white/20" : "hover:bg-white/5"
                                 }`}
                             >
-                                <Image className="h-8 w-8" width={24} height={24} src={file.iconPath} alt="" />
+                                <Image className="h-8 w-8" width={24} height={24} src={file.iconPath} alt={`${file.name} icon`} />
                                 <span className="flex-1 truncate text-left text-white/90">{file.name}</span>
                                 <ChevronRight className="h-4 w-4 flex-shrink-0 text-white/40" />
                             </motion.button>

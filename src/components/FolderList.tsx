@@ -23,7 +23,7 @@ const FolderList: React.FC<FolderListProps> = ({ folders, currentFolder, setCurr
                         currentFolder === folder.id ? "bg-white/20" : ""
                     }`}
                 >
-                    <Image className="h-8 w-8" width={24} height={24} src={folder.icon} alt="" />
+                    <Image className="h-8 w-8" width={24} height={24} src={folder.icon} alt={`${folder.name} folder icon`} />
                     <span className="text-left">{folder.name}</span>
                 </button>
             ))}

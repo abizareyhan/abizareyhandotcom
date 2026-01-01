@@ -10,7 +10,10 @@ import { SearchProvider } from "@/lib/SearchContext";
 import SearchBar from "@/components/SearchBar";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import DialogContext, { DialogType } from "@/lib/DialogContext";
+import DialogContext, { DialogType, DialogData, ImagePreviewData, ConfirmationData } from "@/lib/DialogContext";
+import AboutDialog from "@/components/dialogs/AboutDialog";
+import ConfirmationDialog from "@/components/dialogs/ConfirmationDialog";
+import ImagePreviewDialog from "@/components/dialogs/ImagePreviewDialog";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -20,9 +23,9 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     const [selectedDialog, setSelectedDialog] = useState<DialogType | null>(null);
-    const [dialogData, setDialogData] = useState<any>(null);
+    const [dialogData, setDialogData] = useState<DialogData>(null);
 
-    const openDialog = (dialogType: DialogType, data?: any) => {
+    const openDialog = (dialogType: DialogType, data?: DialogData) => {
         setSelectedDialog(dialogType);
         if (data) setDialogData(data);
     };
@@ -57,21 +60,22 @@ export default function RootLayout({
         switch (selectedDialog) {
             case "about":
                 return <AboutDialog handleOpenDialog={handleOpenDialog} />;
-            case "blog-confirmation":
-                return ConfirmationOpenLinkDialog(dialogData?.url || "https://blog.abizareyhan.com", closeDialog);
+            case "blog-confirmation": {
+                const url = (dialogData as ConfirmationData)?.url || "https://blog.abizareyhan.com";
+                return <ConfirmationDialog url={url} onClose={closeDialog} />;
+            }
             case "linkedin-fonsmans":
-                return ConfirmationOpenLinkDialog(
-                    "https://www.linkedin.com/posts/fonsmans_finder-portfolio-made-in-framer-activity-7266038502004338690-lpg5",
-                    closeDialog,
-                );
+                return <ConfirmationDialog url="https://www.linkedin.com/posts/fonsmans_finder-portfolio-made-in-framer-activity-7266038502004338690-lpg5" onClose={closeDialog} />;
             case "github":
-                return ConfirmationOpenLinkDialog("https://github.com/abizareyhan", closeDialog);
+                return <ConfirmationDialog url="https://github.com/abizareyhan" onClose={closeDialog} />;
             case "linkedin":
-                return ConfirmationOpenLinkDialog("https://linkedin.com/in/abizareyhan", closeDialog);
+                return <ConfirmationDialog url="https://linkedin.com/in/abizareyhan" onClose={closeDialog} />;
             case "certificate":
-                return ConfirmationOpenLinkDialog("https://www.credential.net/706e4c15-202e-4d6d-a386-fb3631821700", closeDialog);
-            case "image-preview":
-                return dialogData ? <ImagePreviewDialog imageUrl={dialogData.url} imageAlt={dialogData.alt} /> : null;
+                return <ConfirmationDialog url="https://www.credential.net/706e4c15-202e-4d6d-a386-fb3631821700" onClose={closeDialog} />;
+            case "image-preview": {
+                const imageData = dialogData as ImagePreviewData;
+                return imageData ? <ImagePreviewDialog imageUrl={imageData.url} imageAlt={imageData.alt} /> : null;
+            }
             default:
                 return null;
         }
@@ -79,9 +83,30 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-            <link rel="icon" href="/favicon.ico" sizes="any" />
-            <meta name="theme-color" content="#16106E" />
-            <title>Reyhan Abizar - Software Engineer</title>
+            <head>
+                <link rel="icon" href="/favicon.ico" sizes="any" />
+                <meta name="theme-color" content="#16106E" />
+                <meta
+                    name="description"
+                    content="Reyhan Abizar is a Software Engineer specializing in Mobile Development with 7+ years of experience building Android, iOS, and cross-platform apps using Kotlin, Flutter, and React."
+                />
+                <meta property="og:title" content="Reyhan Abizar - Software Engineer" />
+                <meta
+                    property="og:description"
+                    content="Mobile Developer with 7+ years of experience. View my portfolio of Android, iOS, and cross-platform apps."
+                />
+                <meta property="og:image" content="https://abizareyhan.com/og-image.png" />
+                <meta property="og:url" content="https://abizareyhan.com" />
+                <meta property="og:type" content="website" />
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Reyhan Abizar - Software Engineer" />
+                <meta
+                    name="twitter:description"
+                    content="Mobile Developer with 7+ years of experience. View my portfolio of Android, iOS, and cross-platform apps."
+                />
+                <meta name="twitter:image" content="https://abizareyhan.com/og-image.png" />
+                <title>Reyhan Abizar - Software Engineer</title>
+            </head>
 
             <body className={`${plusJakartaSans.className} overflow-hidden`}>
                 <DialogContext.Provider value={{ openDialog, closeDialog }}>
@@ -150,16 +175,18 @@ export default function RootLayout({
                                         <button
                                             onClick={() => handleOpenDialog("github")}
                                             className="transition-colors duration-300 hover:text-white"
+                                            aria-label="View GitHub profile"
                                         >
                                             <SiGithub className="h-5 w-5" />
                                         </button>
                                         <button
                                             onClick={() => handleOpenDialog("linkedin")}
                                             className="transition-colors duration-300 hover:text-white"
+                                            aria-label="View LinkedIn profile"
                                         >
                                             <SiLinkedin className="h-5 w-5" />
                                         </button>
-                                        <a href="mailto:hi@abizareyhan.com" className="transition-colors duration-300 hover:text-white">
+                                        <a href="mailto:hi@abizareyhan.com" className="transition-colors duration-300 hover:text-white" aria-label="Send email">
                                             <SiGmail className="h-5 w-5" />
                                         </a>
                                     </div>
@@ -215,129 +242,3 @@ export default function RootLayout({
         </html>
     );
 }
-
-// Image Preview Dialog Component
-const ImagePreviewDialog = ({ imageUrl, imageAlt }: { imageUrl: string; imageAlt: string }) => {
-    return (
-        <div className="flex items-center justify-center p-4">
-            <Image src={imageUrl} alt={imageAlt} width={1200} height={800} className="max-h-[70vh] w-auto object-contain" />
-        </div>
-    );
-};
-
-const AboutDialog = ({
-    handleOpenDialog,
-}: {
-    handleOpenDialog: (dialog: "about" | "blog-confirmation" | "linkedin-fonsmans" | "github" | "linkedin" | "certificate") => void;
-}) => {
-    const lastUpdated = new Date("2024-03-01T15:00:00+07:00");
-
-    return (
-        <div className="flex w-full flex-col items-center space-y-4 p-4">
-            <Image src="https://assets.abizareyhan.com/profile.png" alt="Profile Picture" width={64} height={64} className="rounded-full" />
-            <div className="flex w-full flex-col items-center">
-                <p className="text-center text-lg font-bold text-white">Muhammad Reyhan Abizar</p>
-                <p className="text-center text-xs text-white/70">Software Engineer since 2017</p>
-            </div>
-            <div className="flex w-full flex-col rounded border border-white/10">
-                <div className="divide-y divide-zinc-700 text-xs">
-                    <div className="flex items-start justify-between space-x-10 p-2">
-                        <span className="flex-none text-zinc-400">Specialization</span>
-                        <span className="max-w-full flex-wrap break-words text-end text-white">Mobile Development</span>
-                    </div>
-                    <div className="flex items-start justify-between space-x-12 p-2">
-                        <span className="flex-none text-zinc-400">Tech Stack</span>
-                        <span className="max-w-full flex-wrap break-words text-end text-white">
-                            Kotlin, Kotlin Multiplatform, Java, Flutter, React, Tailwind, Next.js, PHP, Laravel, SQL, Firebase, and more.
-                        </span>
-                    </div>
-                    <div className="flex items-start justify-between space-x-10 p-2">
-                        <span className="flex-none text-zinc-400">Current Employment</span>
-                        <span className="max-w-full flex-wrap break-words text-end text-white">Full Time at PGI Data as Android Developer</span>
-                    </div>
-                    <div className="flex items-start justify-between space-x-10 p-2">
-                        <span className="flex-none text-zinc-400">Open for Opportunity</span>
-                        <span className="max-w-full flex-wrap break-words text-end text-white">Yes, but not actively looking</span>
-                    </div>
-                    {/* <div className="flex items-start justify-between space-x-10 p-2">
-                        <span className="flex-none text-zinc-400">Latest Certification</span>
-                        <div className="max-w-full flex-wrap space-y-2 break-words text-end text-white">
-                            <span className="max-w-full flex-wrap break-words text-end text-white">
-                                Google Play Academy - Store Listing Certificate
-                            </span>
-                            <div className="flex max-w-full flex-col flex-wrap items-end space-y-2 break-words text-end">
-                                <button
-                                    className="shadow-apple relative w-auto rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
-                                    onClick={() => handleOpenDialog("certificate")}
-                                >
-                                    <span className="absolute inset-0 rounded-[5px] bg-gradient-to-b from-white to-transparent opacity-[.17]"></span>
-                                    View Certificate
-                                </button>
-                            </div>
-                        </div>
-                    </div> */}
-                    <div className="flex items-center justify-between space-x-10 p-2">
-                        <span className="flex-none text-zinc-400">Resume</span>
-                        <div className="flex max-w-full flex-col flex-wrap items-end space-y-2 break-words text-end">
-                            <button
-                                className="shadow-apple relative w-auto rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
-                                onClick={() => {
-                                    window.open("https://assets.abizareyhan.com/resume.pdf", "_blank");
-                                }}
-                            >
-                                <span className="absolute inset-0 rounded-[5px] bg-gradient-to-b from-white to-transparent opacity-[.17]"></span>
-                                Download
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="flex w-full justify-end space-x-4 text-white/70">
-                <span className="text-start text-xs">
-                    Last updated {lastUpdated.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
-                </span>
-                <div className="flex-1"></div>
-                <button onClick={() => handleOpenDialog("github")} className="transition-colors duration-300 hover:text-white">
-                    <SiGithub className="h-5 w-5" />
-                </button>
-                <button onClick={() => handleOpenDialog("linkedin")} className="transition-colors duration-300 hover:text-white">
-                    <SiLinkedin className="h-5 w-5" />
-                </button>
-                <a href="mailto:hi@abizareyhan.com" className="transition-colors duration-300 hover:text-white">
-                    <SiGmail className="h-5 w-5" />
-                </a>
-            </div>
-        </div>
-    );
-};
-
-const ConfirmationOpenLinkDialog = (url: string, setSelectedDialog: (dialog: null) => void) => {
-    return (
-        <div className="flex w-full flex-col p-4">
-            <p className="text-sm text-white/70">This link is taking you to the following website</p>
-            <div className="mt-2 flex w-full flex-col rounded border border-white/10">
-                <div className="divide-y divide-zinc-700 p-2 text-xs">
-                    <span className="max-w-full flex-wrap break-words text-start text-white">{url}</span>
-                </div>
-            </div>
-            <div className="mt-6 flex w-full justify-end space-x-2">
-                <button
-                    className="shadow-apple relative rounded-[5px] bg-[#007AFF] px-[7px] py-[3px] text-xs text-white"
-                    onClick={() => {
-                        setSelectedDialog(null);
-                        window.open(url, "_blank");
-                    }}
-                >
-                    <span className="rounded-[5px]bg-gradient-to-b absolute inset-0 from-white to-transparent opacity-[.17]"></span>
-                    Open Link
-                </button>
-                <button
-                    className="shadow-apple relative rounded-[5px] bg-white px-[7px] py-[3px] text-xs text-black"
-                    onClick={() => setSelectedDialog(null)}
-                >
-                    Cancel
-                </button>
-            </div>
-        </div>
-    );
-};

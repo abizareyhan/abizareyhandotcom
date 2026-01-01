@@ -15,15 +15,24 @@ interface FilePreviewProps {
 const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBackButton = false, onOpenImageDialog }) => {
     const { openDialog } = useDialog();
     const [effectiveActions, setEffectiveActions] = useState(currentFile?.actions || []);
+    const [isImageLoading, setIsImageLoading] = useState(true);
+
+    // Reset loading state when file changes
+    useEffect(() => {
+        if (currentFile?.metadata?.thumbnail) {
+            setIsImageLoading(true);
+        }
+    }, [currentFile?.id, currentFile?.metadata?.thumbnail]);
 
     useEffect(() => {
         if (currentFile) {
-            const urlAction = currentFile.metadata?.url
+            const url = currentFile.metadata?.url;
+            const urlAction = url
                 ? [
                       {
                           title: "Open",
                           enabled: true,
-                          onClick: () => openDialog("blog-confirmation", { url: currentFile.metadata?.url }),
+                          onClick: () => openDialog("blog-confirmation", { url }),
                       },
                   ]
                 : [];
@@ -62,7 +71,16 @@ const FilePreview: React.FC<FilePreviewProps> = ({ currentFile, onBack, showBack
                                 className="relative aspect-[2204/1536] cursor-pointer overflow-hidden rounded-lg bg-white/5"
                                 onClick={handleThumbnailClick}
                             >
-                                <Image src={currentFile.metadata?.thumbnail} alt="" fill className="object-cover" />
+                                {isImageLoading && (
+                                    <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-white/5 via-white/10 to-white/5" />
+                                )}
+                                <Image
+                                    src={currentFile.metadata?.thumbnail}
+                                    alt={`${currentFile.name} preview screenshot`}
+                                    fill
+                                    className={`object-cover transition-opacity duration-300 ${isImageLoading ? "opacity-0" : "opacity-100"}`}
+                                    onLoad={() => setIsImageLoading(false)}
+                                />
                             </div>
                         )}
                         <div className="mt-4 space-y-4">
